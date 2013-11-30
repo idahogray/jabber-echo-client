@@ -4,10 +4,12 @@ from wokkel.client import XMPPClient
 from wokkel.xmppim import PresenceProtocol
 from wokkel.xmppim import RosterClientProtocol
 from wokkel.xmppim import RosterItem
+from wokkel.muc import MUCClient
 from twisted.words.protocols.jabber.jid import JID
 
 from jabber_bot import EchoBotProtocol
 from jabber_bot import BotPresenceClientProtocol
+from jabber_bot import MUCGreeter
 
 application = service.Application("echobot")
 
@@ -25,6 +27,9 @@ a = roster.setItem(RosterItem(JID("keith@idahogray.home")))
 
 presence = BotPresenceClientProtocol()
 presence.setHandlerParent(xmppclient)
+
+mucHandler = MUCGreeter(JID('test_room@conference.idahogray.home'), 'simulator_muc')
+mucHandler.setHandlerParent(xmppclient)
 
 xmppclient.setServiceParent(application)
 
